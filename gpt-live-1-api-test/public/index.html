@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GPT-Live-1 lab</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>GPT-Live-1 API lab</h1>
+        <p>full-duplex / interrupt / Responses delegation</p>
+      </div>
+      <span id="key-badge" class="badge">API key: …</span>
+    </header>
+    <main>
+      <aside>
+        <div class="field">
+          <label for="voice">Voice</label>
+          <select id="voice"></select>
+        </div>
+        <div class="field">
+          <label for="extra">追加スタイル指示</label>
+          <textarea
+            id="extra"
+            placeholder="例: ゆっくり、低めの声。答えは1文。"
+          ></textarea>
+        </div>
+        <label class="check">
+          <input id="web-search" type="checkbox" checked />
+          web_search 委譲 (gpt-5.6-terra)
+        </label>
+        <div class="meter" title="mic level"><span id="level"></span></div>
+        <div class="actions">
+          <button id="start">会話開始</button>
+          <button id="stop" class="secondary" disabled>終了</button>
+          <button id="mute" class="secondary" disabled>ミュート</button>
+        </div>
+        <p class="hint" id="models"></p>
+        <p class="hint">接続後に話せる。割り込みは相手の発話中に被せて話す。</p>
+        <ol class="scenarios">
+          <li>「こんにちは。自己紹介して」</li>
+          <li>返答中に「待って、もっと短く」</li>
+          <li>「今日の東京の天気は？」→ 委譲イベントを右で確認</li>
+          <li>検索中に「あ、大阪にして」</li>
+          <li>「早口で」「落ち着いた声で」</li>
+        </ol>
+      </aside>
+      <section class="stage">
+        <div class="status">
+          <span id="status">未接続</span>
+          <span id="usage"></span>
+        </div>
+        <div id="captions" class="captions"></div>
+        <form id="inject" class="dock">
+          <input
+            id="inject-text"
+            type="text"
+            placeholder="テキスト注入 (commentary.append)"
+            disabled
+          />
+          <button type="submit" class="secondary" disabled>送る</button>
+        </form>
+      </section>
+      <section class="log-pane">
+        <div class="log-head">
+          <label>events</label>
+          <button id="download" type="button" class="secondary">JSON保存</button>
+        </div>
+        <pre id="log" class="log"></pre>
+      </section>
+    </main>
+    <audio id="playback" autoplay></audio>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
